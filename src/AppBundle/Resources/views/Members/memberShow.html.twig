@@ -1,0 +1,31 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir un membre{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{asset('bundles/app/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
+<h1 class="text-center">Affichage d'un seul membre</h1>
+
+{% include '@App/header.html.twig' %}
+
+<div class="card m-5 text-center" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ member.photo }}" class="img-fluid rounded-start m-3" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ member.firstname }} {{ member.lastname }}</h5>
+        <p class="card-text">{{ member.category }}</p>
+        <a href="#" class="btn btn-primary m-auto">Like</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

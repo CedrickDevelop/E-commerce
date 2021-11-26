@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <h2>Calculatrice:</h2>
+
+        Chiffre 1: <b>{{ x }}</b> <br>
+        Chiffre 2: <b>{{ y }}</b> <br>
+        Opérateur: <b>{{ calc }}</b> <br>
+        <br>
+
+        <div class="alert alert-danger d-inline" role="alert">
+            Le resultat est:
+            {% if ((calc == '+')) %}{{ x + y }}
+            {% elseif ((calc == '-')) %}{{ x - y }}
+            {% elseif ((calc == '*')) %}{{ x * y }}
+            {% elseif ((calc == '/')) %}{{ x / y }}
+            {% endif %}
+             
+        </div>
+    </div>
+
+{% endblock %}

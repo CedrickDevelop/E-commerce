@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="m-5 text-center">Ajouter un produit</h1>
+
+    <h4 class="m-5 text-danger">{{ message  }}</h4>
+
+    {% if message != null %}
+    <p class="m-5 text-danger">Vous avez oubliez un champ dans le formulaire</p>
+    {% endif %}
+
+    <form class="m-5" method="post" action="{{path('add_product_page')}}">
+        <div class="mb-3">
+          <label for="nom_produit" class="form-label">nom produit</label>
+          <input type="text" class="form-control" id="nom_produit" name="nom_produit">
+        </div>
+        
+        <div class="mb-3">
+            <label for="prix_produit" class="form-label">prix produit</label>
+            <select class="form-select"  id="prix_produit" name="prix_produit">
+                <option selected>Choisir le prix</option>
+                <option value="100">100€</option>
+                <option value="150">150€</option>
+                <option value="200">200€</option>
+              </select>
+        </div>
+        
+        <div class="mb-3">
+
+          <label for="promotion_produit" class="form-label">promotion produit</label>
+            <select class="form-select"  id="promotion_produit" name="promotion_produit">
+                <option selected>Choisir la promotion</option>
+                <option value="5">5%</option>
+                <option value="10">10%</option>
+                <option value="15">15%</option>
+                <option value="20">20%</option>
+                <option value="25">25%</option>
+                <option value="30">30%</option>
+                <option value="35">35%</option>
+
+              </select>
+        </div>
+        
+        <div class="mb-3">
+          <label for="icon_produit" class="form-label">icone produit</label>
+            <select class="form-select"  id="icon_produit" name="icon_produit">
+                <option selected>Choisir l'icone</option>
+                <option value="fas fa-laptop-code">Ordinateur</option>
+                <option value="fas fa-phone-alt">Telephone</option>
+                <option value="fas fa-tablet-alt">Tablette</option>
+              </select>
+          
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+
+
+
+      {% if affiche == true %}
+          
+        <div class="container mt-5">
+            <h2>Affichage des résultats formulaire</h2>
+            <br>
+            <ul>
+                <li>Nom :  <i class="{{ icon }}"></i>  {{ nom }}</li>
+                <li>Promotion : {{ promotion }}%</li>
+                <li>Prix : {{ prix }} €</li>
+                <li>Prix avec promotion: {{ prix - prix * promotion / 100 }} €</li>
+
+            </ul>
+        </div>
+
+      {% endif %}
+      
+
+{% endblock %}

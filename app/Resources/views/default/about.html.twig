@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="container mt-5">
+        <h3>About Page 😅</h3>
+        <a href="{{ path('homepage') }}">Link to Home Page</a><br>
+        <a href="{{ path('addpage') }}">Link to Add Page</a><br>
+        <a href="{{ path('productspage', { param: 'ordinateur', param2: 'Telephone' }) }}">Link to Products Page</a><br>
+
+        <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium adipisci asperiores aspernatur aut culpa dicta dolor dolore ducimus eos eveniet excepturi fuga fugit illo itaque laudantium modi neque nulla officiis quae, sequi, sint temporibus voluptatum! At commodi eius.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A atque consequatur debitis delectus dolorem ducimus, enim explicabo           facere in laborum maiores nisi odit quas quia ratione repudiandae sunt veniam voluptatibus!</p>
+    </section>
+{% endblock %}

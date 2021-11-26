@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a client{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Welcome to the Client:add page</h1>
+        <a href="{{ path('homepage') }}">Link to Home Page</a><br>
+        <a href="{{ path('aboutpage') }}">Link to About Page</a><br>
+        <a href="{{ path('productspage', { param: 'ordinateur', param2: 'Telephone' }) }}">Link to Products Page</a><br>
+    </div>
+{% endblock %}

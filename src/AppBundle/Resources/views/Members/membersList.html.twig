@@ -1,0 +1,33 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block title %}Liste de Membres{% endblock %}
+
+{% block main %}
+
+{% include '@App/header.html.twig' %}
+
+
+<h1 class="text-center m-3">Affichage de tous les membres</h1>
+<table class="table m-5 w-75">
+  <thead>
+    <tr>
+      <th scope="col">Position</th>
+      <th scope="col">Firstname</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Voir les informations</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in members %}
+    <tr>
+
+      <td>{{ member.id }}</td>
+      <td>{{ member.firstname }}</td>
+      <td>{{ member.lastname }}</td>
+      <td><button type="button" class="btn btn-primary" ><a class="text-decoration-none text-light" href="{{ path('member_show',{'id':member.id}) }}">Details</a> </button></td>
+    </tr>
+    {% endfor %}
+ 
+</table>
+
+{% endblock %}

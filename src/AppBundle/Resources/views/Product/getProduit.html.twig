@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="container mt-5 mb-2">
+      <h1 class="text-center">Affichage du get Produit</h1>
+
+      {% if(qte > 10) %} 
+      <ul>
+        <li><p>nom du produit : {{prdname}}</p></li>
+        <li><p>Prix : {{prix}} € </p></li>
+        <li> <p>Quantité : {{qte}}</p></li>
+        <li> <p>Total prix  : {{qte*prix}} €</p></li>
+      </ul>
+
+      {% else %}
+
+      <p>Vous devez ajouter plus de 10 éléments</p>
+
+      {% endif %}
+
+    </section>
+    
+    <section class="container mt-5 mb-2">
+      <h1 class="text-center">Affichage du tableau</h1>
+      <ul>
+        {% for tab in produits %}
+        <li><i class="{{tab.icon}}"></i> {{tab.nom ~ ' ' ~ tab.prix }}€, avec la promotion de {{tab.promotion}}% => {{tab.prix - (tab.prix * (tab.promotion /100))}}€</li><br>
+        {% endfor %}
+
+        <i class="fab fa-wolf-pack-battalion"></i> Il y a {{produits | length }} éléments dans le tableau de produits
+      </ul>
+
+
+      
+
+    </section>
+
+{% endblock %}
+
+
+
