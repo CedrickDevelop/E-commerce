@@ -25,8 +25,27 @@ class DefaultController extends Controller
      */
     public function loginAdminAction(Request $request)
     {
+        // $message = '';
+        
+        if ($request->isMethod('POST')){
+            
+            $email = $request->get('email');
+            $password = $request->get('password');
+
+            if (($email == 'admin2021@gmail.com') && ($password == 'admin123')){
+                
+                return $this->redirectToRoute('homepage');
+
+            } else {
+                $message = "Vous avez effectué une erreur";
+            }
+        }
+        
+
         // replace this example code with whatever you need
-        return $this->render('@App/default/login.html.twig');
+        return $this->render('@App/default/login.html.twig',[
+            'msg'   => @$message
+        ]);
     }
 
     /**
