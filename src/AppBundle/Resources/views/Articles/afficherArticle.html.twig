@@ -1,0 +1,12 @@
+<h2>Afficher les articles</h2>
+
+{% for article in articles %}
+  
+  <p>position : {{article.id}}</p> <br>
+  <p>nom : {{article.nom}}</p> <br>
+  <p>description : {{article.description}}</p> <br>
+  <p>quantité : {{article.qte}}</p> <br>
+
+  <hr>
+
+{% endfor %}

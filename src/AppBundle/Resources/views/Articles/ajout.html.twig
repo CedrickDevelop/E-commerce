@@ -1,7 +1,37 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block main %}
+
+<table class="table table-bordered text-center">
+
+  <tr>
+    <th>Nom produit</th>
+    <th>Quantité</th>
+    <th>Detail</th>
+    <th>Delete</th>
+    <th>Modifier</th>
+  </tr>
+
+  {% for article in articles %}
+    
+    <tr>
+      <td>{{article.nom}} </td>
+      <td>{{article.qte}} </td>
+      <td><a href="#" class="btn btn-success">Detail</a> </td>
+      <td><a href="#" class="btn btn-danger">Delete</a> </td>
+      <td><a href="#" class="btn btn-warning">Modifier</a> </td>
+    </tr>
+
+  {% endfor %}
+</table>
+
+{# 
 {{ form_start(form)}}
 
 {{ form_widget(form)}}
 
 <button type="submit">Ajouter</button>
 
-{{ form_end(form)}}
+{{ form_end(form)}} #}
+
+{% endblock %}
