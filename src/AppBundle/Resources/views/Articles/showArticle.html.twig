@@ -1,0 +1,23 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block main %}
+
+<table class="table table-bordered text-center">
+
+  <tr>
+    <th>Nom produit</th>
+    <th>Quantité</th>
+    <th>Description</th>
+
+  </tr>
+   
+    <tr>
+      <td>{{article.id}}{{article.nom}} </td>
+      <td>{{article.qte}} </td>
+      <td>{{article.description}} </td>
+      
+    </tr>
+
+</table>
+
+{% endblock %}

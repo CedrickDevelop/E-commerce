@@ -1,12 +1,28 @@
-<h2>Afficher les articles</h2>
+{% extends '@App/layoutAdmin.html.twig' %}
 
-{% for article in articles %}
-  
-  <p>position : {{article.id}}</p> <br>
-  <p>nom : {{article.nom}}</p> <br>
-  <p>description : {{article.description}}</p> <br>
-  <p>quantité : {{article.qte}}</p> <br>
+{% block main %}
 
-  <hr>
+<table class="table table-bordered text-center">
 
-{% endfor %}
+  <tr>
+    <th>Nom produit</th>
+    <th>Quantité</th>
+    <th>Detail</th>
+    <th>Delete</th>
+    <th>Modifier</th>
+  </tr>
+
+  {% for article in articles %}
+    
+    <tr>
+      <td>{{article.id}}{{article.nom}} </td>
+      <td>{{article.qte}} </td>
+      <td><a href="{{path('showArticle', {id:article.id} )}}" class="btn btn-success">Show</a> </td>
+      <td><a href="{{path('deleteArticle', {id:article.id} )}}" class="btn btn-danger" onclick="if(!confirm('voulez-vous supprimer ?')) return false">Delete</a> </td>
+      <td><a href="#" class="btn btn-warning">Edit</a> </td>
+    </tr>
+
+  {% endfor %}
+</table>
+
+{% endblock %}

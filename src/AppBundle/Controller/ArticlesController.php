@@ -35,12 +35,9 @@ class ArticlesController extends Controller
             return new Response('Ajout Ok');
         }
 
-        $cnx=$this->getDoctrine()->getManager();
-        $articles = $cnx->getRepository(Articles::class)->findAll();
 
         return $this->render('@App/Articles/ajout.html.twig', array(
-            'form'  => $form->createView(),
-            'articles'  => $articles
+            'form'  => $form->createView()
         ));
     }
     
@@ -75,7 +72,7 @@ class ArticlesController extends Controller
     }
 
     /**
-     * @Route("/Afficher", name="afficherArticle")
+     * @Route("/Afficher", name="afficher")
      */
     public function AfficherAction(){
         // Connexion avec Doctrine
@@ -86,5 +83,36 @@ class ArticlesController extends Controller
             'articles'  => $articles
         ]);
     }
+    
+    /**
+     * @Route("/delete/{id}", name="deleteArticle")
+     */
+    public function deleteAction($id){
+        
+        $cnx=$this->getDoctrine()->getManager();
+        $delete = $cnx->getRepository(Articles::class)->find($id);
+        $cnx->remove($delete);
+        $cnx->flush();
+        
+
+        return $this->redirectToRoute('afficher');
+    }
+    
+    /**
+     * @Route("/showArticle/{id}", name="showArticle")
+     */
+    public function showArticleAction($id){
+        
+        $cnx=$this->getDoctrine()->getManager();
+        $article = $cnx->getRepository(Articles::class)->find($id);
+
+        
+
+        return $this->render('@App/Articles/showArticle.html.twig', [
+            'article'  => $article
+        ]);
+    }
+    
+
 
 }
