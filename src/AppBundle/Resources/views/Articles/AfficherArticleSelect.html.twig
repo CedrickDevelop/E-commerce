@@ -4,7 +4,17 @@
 
 <table class="table table-bordered text-center">
 
-  <p>{{message}}</p>
+
+  {% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        {% if type == 'valid' %}
+            <div class="alert alert-success" role="alert">
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+  {% endfor %}
+
 
   <form method="post">
     <tr>
@@ -41,11 +51,9 @@
     </tr>
   </form>  
 
-
 </table>
 
-{% if (oneArticle) %}
-  
+{% if (oneArticle) %}  
 
     <div class="card" style="width: 18rem;">
       <!-- <img src="..." class="card-img-top" alt="..."> -->

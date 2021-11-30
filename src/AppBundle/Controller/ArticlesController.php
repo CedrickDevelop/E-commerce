@@ -126,30 +126,33 @@ class ArticlesController extends Controller
         $message ='';
         $oneArticle='';
         
-        if ($request->isMethod('POST')){
-            if ($request->get('submitDelete') === 'delete'){
-                $id = $request->get('articleSelect');
+        $cnx=$this->getDoctrine()->getManager();
 
-                $cnx=$this->getDoctrine()->getManager();
+        if ($request->isMethod('POST')){
+            
+            $id = $request->get('articleSelect');
+
+            if ($request->get('submitDelete') === 'delete'){                
+
                 $delete = $cnx->getRepository(Articles::class)->find($id);
                 $cnx->remove($delete);
                 $cnx->flush();
 
                 $message='Votre element a été supprimé de la base de données';
+                $this->get('session')->getFlashBag()->add('valid', "Votre element a été supprimé de la base de données");
+
             }
 
             if ($request->get('submitDetail') === 'detail'){
-                $id = $request->get('articleSelect');
 
-                $oneArticle = $this->getDoctrine()->getManager()->getRepository(Articles::class)->find($id);
+                $oneArticle = $cnx->getRepository(Articles::class)->find($id);
             }
         }
 
-        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findAll();
+        $articles = $cnx->getRepository(Articles::class)->findAll();
 
         return $this->render('@App/Articles/AfficherArticleSelect.html.twig', [
             'articles'      => $articles,
-            'message'       =>$message, 
             'oneArticle'    =>$oneArticle
         ]);
     }    
