@@ -1,0 +1,62 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block main %}
+
+<table class="table table-bordered text-center">
+
+  <p>{{message}}</p>
+
+  <form method="post">
+    <tr>
+      <th>Choisir le produit</th>
+      <th>supprimer</th>
+      <th>Détail</th>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="articleSelect">Choisir un produit</label>
+          <select class="form-select" id="articleSelect" name="articleSelect">
+            <option selected>Sélectionner un produit</option>
+            
+            {% for article in articles %}
+              
+            <option value="{{article.id}}">{{article.nom}}</option>
+        
+            {% endfor %}
+        
+          </select>
+        </div>
+      </td>
+
+      <td>
+        <button type="submit" class="btn btn-success" name="submitDelete" value="delete">Supprimer</button>
+      </td>
+
+      <td>
+        <button type="submit" class="btn btn-danger" name="submitDetail" value="detail">Afficher</button>
+      </td>
+
+    </tr>
+  </form>  
+
+
+</table>
+
+{% if (oneArticle) %}
+  
+
+    <div class="card" style="width: 18rem;">
+      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <div class="card-body">
+        <h5 class="card-title">{{oneArticle.nom}}</h5>
+        <p class="card-text">Quantité : {{oneArticle.qte}}</p>
+        <p class="card-text">Description : {{oneArticle.description}}</p>
+      </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}
+
