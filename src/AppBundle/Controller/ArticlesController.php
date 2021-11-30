@@ -32,7 +32,7 @@ class ArticlesController extends Controller
             $cnx->persist($produit);
             $cnx->flush();
 
-            return new Response('Ajout Ok');
+            return $this->redirectToRoute('afficher');
         }
 
 
@@ -64,7 +64,7 @@ class ArticlesController extends Controller
             $cnx->flush();
     
     
-            return new Response('Ajout Ok');
+            return $this->redirectToRoute('afficher');
         }
 
         return $this->render('@App/Articles/ajout2.html.twig');

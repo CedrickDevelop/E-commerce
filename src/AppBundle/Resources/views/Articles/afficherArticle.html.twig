@@ -2,6 +2,11 @@
 
 {% block main %}
 
+<div class="d-grid gap-2 m-3">
+  <button class="btn btn-primary" type="button"><a href="{{path('AddArticles')}}" class="text-light text-decoration-none m-3">Ajouter un nouvel élément à la table</a> </button>
+
+</div>
+
 <table class="table table-bordered text-center">
 
   <tr>
@@ -15,7 +20,7 @@
   {% for article in articles %}
     
     <tr>
-      <td>{{article.id}}{{article.nom}} </td>
+      <td>{{article.nom}} </td>
       <td>{{article.qte}} </td>
       <td><a href="{{path('showArticle', {id:article.id} )}}" class="btn btn-success">Show</a> </td>
       <td><a href="{{path('deleteArticle', {id:article.id} )}}" class="btn btn-danger" onclick="if(!confirm('voulez-vous supprimer ?')) return false">Delete</a> </td>

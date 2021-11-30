@@ -18,6 +18,7 @@ class Articles
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
      */
     private $id;
 
@@ -25,6 +26,7 @@ class Articles
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * 
      */
     private $nom;
 
