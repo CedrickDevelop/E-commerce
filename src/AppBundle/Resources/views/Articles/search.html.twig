@@ -1,0 +1,36 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block main %}
+
+  {{ form_start(form)}}
+
+  {{ form_widget(form.nom)}}
+
+  {{ form_widget(form.submit, {'attr':{'value': btn}})}}
+
+  {{ form_end(form, {'render_rest':false})}}
+
+  <table class="table table-bordered text-center">
+
+    <tr>
+      <th>Nom produit</th>
+      <th>Quantité</th>
+      <th>Detail</th>
+      <th>Delete</th>
+      <th>Modifier</th>
+    </tr>
+  
+    {% for res in resultat %}
+      
+      <tr>
+        <td>{{res.nom}} </td>
+        <td>{{res.qte}} </td>
+        <td><a href="{{path('showArticle', {id:res.id} )}}" class="btn btn-success">Show</a> </td>
+        <td><a href="{{path('deleteArticle', {id:res.id} )}}" class="btn btn-danger" onclick="if(!confirm('voulez-vous supprimer ?')) return false">Delete</a> </td>
+        <td><a href="#" class="btn btn-warning">Edit</a> </td>
+      </tr>
+  
+    {% endfor %}
+  </table>
+
+{% endblock %}

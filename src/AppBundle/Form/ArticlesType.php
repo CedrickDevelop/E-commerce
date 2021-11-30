@@ -26,12 +26,16 @@ class ArticlesType extends AbstractType
 
         ->add('description',TextType::class, [
             'required'   => true,
-            'label' =>'Nombre de produits que vous souhaitez'
+            'label' =>'Description du produit'
             ])
 
         ->add('qte')
         ->add('submit', SubmitType::class, [
-            'attr'=>['class'=>'btn btn-info']]);
+            'attr'  =>[
+                'class'=>'btn btn-success',
+                'value' => 'Rechercher',
+                'placeholder' => 'Rechercher'
+                ]]);
     }/**
      * {@inheritdoc}
      */

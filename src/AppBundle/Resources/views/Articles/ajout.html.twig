@@ -6,10 +6,17 @@
 
 {{ form_start(form)}}
 
-{{ form_widget(form)}}
+{{ form_label(form.nom)}}
+{{ form_widget(form.nom)}}
 
-<button type="submit">Ajouter</button>
+{{ form_label(form.description)}}
+{{ form_widget(form.description)}}
 
-{{ form_end(form)}}
+{{ form_label(form.qte)}}
+{{ form_widget(form.qte)}}
+
+{{ form_widget(form.submit)}}
+
+{{ form_end(form, {'render_rest':false})}}
 
 {% endblock %}

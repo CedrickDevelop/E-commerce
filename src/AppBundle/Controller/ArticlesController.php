@@ -157,5 +157,65 @@ class ArticlesController extends Controller
         ]);
     }    
 
+    // --------------------------------------------
+    // --------------------------------------------
+    // --------------------------------------------
+
+    /**
+     * @Route ("/search", name="search")
+     */
+    public function searchAction(Request $request)
+    {
+        $form = $this->createForm(ArticlesType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $formArticle = $request->get('appbundle_articles');
+            $nom = $formArticle['nom'];
+            $cnx = $this->getDoctrine()->getManager();
+            $data = $cnx->getRepository(Articles::class)->findBy(array('nom'=>$nom));
+        }
+
+        return $this->render('@App/Articles/search.html.twig', [
+            'form'  => $form->createView(),
+            'resultat'   =>  @$data,
+            'btn'       => 'Rechercher'
+        ]);
+    }
+
+    // --------------------------------------------
+    // --------------------------------------------
+    // --------------------------------------------
+
+    /**
+     * Le formulaire est généré avec Article Type
+     * @Route("modifier/{id}", name="modifier")
+     */
+    public function modifierAction(Request $request, $id)
+    {
+        
+        $cnx = $this->getDoctrine()->getManager();
+        $produit = $cnx->getRepository(Articles::class)->find($id);
+
+        // On cree le formulaire
+        $form = $this->createForm(ArticlesType::class,$produit);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) 
+        {
+
+            // Connexion avec Doctrine et persistance de la table
+            $cnx->persist($produit);
+            $cnx->flush();
+
+            return $this->redirectToRoute('afficher');
+        }
+
+
+        return $this->render('@App/Articles/ajout.html.twig', array(
+            'form'  => $form->createView()
+        ));
+    }
+
 
 }
