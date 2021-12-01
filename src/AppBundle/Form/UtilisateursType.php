@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,6 +50,16 @@ class UtilisateursType extends AbstractType
                 'class'     => 'form-control'
             ]
         ])
+        // ->add('password', RepeatedType::class, [
+        //     'type'              => PasswordType::class,
+        //     'invalid_message'  =>'Les mots de passe doivent coincider',
+        //     'required'          => true,
+        //     'first_options'     =>['label'  =>'Mot de Passe'],
+        //     'second_options'     =>['label'  =>'Mot de Passe Confirmation'],
+        //     'attr'              => [
+        //         'class'     => 'form-control'
+        //     ]
+        // ])
         ->add('submit', SubmitType::class, [
             'attr'  => [
                 'class' => 'btn btn-primary mt-3'

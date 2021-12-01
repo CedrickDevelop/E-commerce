@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class UsersController extends Controller
 {
@@ -79,7 +81,16 @@ class UsersController extends Controller
             }
             
             if (password_verify($password,$userExist->getPassword())){
-                return new Response('Vous êtes connecté');
+
+                //demarrer une session
+                $session = new Session();
+
+                $session->set('user', $userExist);
+
+
+                return $this->redirectToRoute('afficher');
+
+                // return new Response('Vous êtes connecté '.$userExist->getNom().' '.$userExist->getPrenom());
             } else {
                 $this->get('session')->getFlashBag()->add('error', "Votre mot de passe et password ne coincident pas");
             }         
