@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page d'inscription{% endblock %}
+
+{% block body %}
+<h1 class="text-center m-5">Page d'inscription</h1>
+
+{% for type, messages in app.session.flashbag.all() %}
+{% for message in messages %}
+    {% if type == 'error' %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+    {% endif %}
+    {% if type == 'valid' %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+    {% endif %}
+{% endfor %}
+{% endfor %}
+
+
+
+
+{{form_start(form)}}
+
+<div class="m-5 w-50">
+
+{{form_widget(form)}}
+
+</div>
+
+
+{{form_end(form)}}
+
+
+{% endblock %}

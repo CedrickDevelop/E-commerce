@@ -38,7 +38,7 @@ class Utilisateurs
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
 
@@ -48,6 +48,13 @@ class Utilisateurs
      * @ORM\Column(name="role", type="string", length=255)
      */
     private $role;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
 
 
     /**
@@ -155,5 +162,32 @@ class Utilisateurs
     {
         return $this->role;
     }
+    
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Utilisateurs
+     */
+    public function setPassword($password)
+    {
+        $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $passwordEncrypt;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+
+        return $this->password;
+    }
+
 }
 

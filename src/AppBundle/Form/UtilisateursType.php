@@ -3,6 +3,11 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +18,42 @@ class UtilisateursType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('prenom')->add('email')->add('role');
+        $builder
+        ->add('nom', TextType::class, [
+            'attr'  => [
+                'class' => 'form-control'
+            ]
+        ])
+        ->add('prenom', TextType::class, [
+            'attr'  => [
+                'class' => 'form-control'
+            ]
+        ])
+        ->add('email', EmailType::class, [
+            'attr'  => [
+                'class' => 'form-control'
+            ]
+        ])
+        ->add('role', ChoiceType::class, [
+            'choices'   =>  [
+                'Admin'     =>1,
+                'Client'    =>2,
+                'RH'        =>3
+            ],
+            'attr'  => [
+                'class' => 'form-control'
+            ]
+        ])
+        ->add('password', PasswordType::class, [
+            'attr'      => [
+                'class'     => 'form-control'
+            ]
+        ])
+        ->add('submit', SubmitType::class, [
+            'attr'  => [
+                'class' => 'btn btn-primary mt-3'
+            ]
+        ]);
     }/**
      * {@inheritdoc}
      */
