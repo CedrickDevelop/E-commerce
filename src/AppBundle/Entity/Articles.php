@@ -39,6 +39,14 @@ class Articles
     private $photo;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="prix", type="float")
+     * 
+     */
+    private $prix;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -157,5 +165,29 @@ class Articles
     public function getPhoto()
     {
         return $this->photo;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param float $prix
+     *
+     * @return Articles
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return float
+     */
+    public function getPrix()
+    {
+        return $this->prix;
     }
 }

@@ -2,12 +2,15 @@
 
 namespace AppBundle\Form;
 
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FloatType;
 
 class ArticlesType extends AbstractType
 {
@@ -28,8 +31,17 @@ class ArticlesType extends AbstractType
             'required'   => true,
             'label' =>'Description du produit'
             ])
-
-        ->add('qte')
+        ->add('photo', FileType::class)
+        ->add('prix', NumberType::class, [
+            'attr'  => [
+                'min'   => 0
+            ]
+        ])
+        ->add('qte', NumberType::class, [
+            'attr'  => [
+                'min'   => 0
+            ]
+        ])
         ->add('submit', SubmitType::class, [
             'attr'  =>[
                 'class'=>'btn btn-success',

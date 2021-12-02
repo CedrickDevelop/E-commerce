@@ -14,7 +14,7 @@ class ArticlesController extends Controller
 {
 
     /**
-     * Le formulaire est généré avec Article Type
+     * FORMULAIRE GENERE
      * @Route("/Ajout", name="AddArticles")
      */
     public function AjoutAction(Request $request)
@@ -35,13 +35,29 @@ class ArticlesController extends Controller
 
         if($form->isSubmitted()) // Deuxième possibilité pour récuperer les informations du formulaire
         {
+            // PHOTO
+                //Obtenir les informations de nom etc...du formulaire type File
+                $file = $form->get('photo')->getData();
+                //recuperation du nom de la photo et definition de son nom
+                $photoName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->guessExtension();
+                $photo = $photoName.'.'.$extension;
+                // On definit le nom de la photo pour l'envoyer en bdd
+                $produit->setPhoto($photo);
 
-            // Connexion avec Doctrine et persistance de la table
-            $cnx = $this->getDoctrine()->getManager();
-            $cnx->persist($produit);
-            $cnx->flush();
+                // On deplace la photo vers le dossier dont le nom se trouve dans service.yml -- parameters
+                $file->move($this->getParameter('articlesUpload'), $photo);
 
-            return $this->redirectToRoute('afficher');
+                // return new Response($photo);
+
+            // PERSISTANCE
+                // Connexion avec Doctrine et persistance de la table
+                $cnx = $this->getDoctrine()->getManager();
+                $cnx->persist($produit);
+                $cnx->flush();
+
+            // REORIENTATION
+                // return $this->redirectToRoute('afficher');
         }
 
 
@@ -51,7 +67,7 @@ class ArticlesController extends Controller
     }
     
     /**
-     * Le formulaire est ajouté à la main
+     * FORMULAIRE FAIT MAIN
      * @Route("/Ajout2", name="AddArticles2")
      */
     public function AjoutAction2(Request $request)

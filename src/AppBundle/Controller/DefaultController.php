@@ -14,8 +14,13 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $cnx = $this->getDoctrine()->getManager();
+        $articles = $cnx->getRepository(Articles::class)->findAll();
+
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig');
+        return $this->render('@App/index.html.twig', [
+            'articles'  => $articles
+        ]);
     }
     
     /**
@@ -41,7 +46,7 @@ class DefaultController extends Controller
         
 
         // replace this example code with whatever you need
-        return $this->render('@App/default/login.html.twig',[
+        return $this->render('default/login.html.twig',[
             'msg'   => @$message
         ]);
     }

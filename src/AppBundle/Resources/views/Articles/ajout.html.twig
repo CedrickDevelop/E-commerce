@@ -4,16 +4,22 @@
 
 
 
-{{ form_start(form)}}
+{{ form_start(form, {'attr': {'class': 'w-50 m-5'}})}}
 
 {{ form_label(form.nom)}}
-{{ form_widget(form.nom)}}
+{{ form_widget(form.nom, {'attr': {'class': 'form-control'}})}}
 
 {{ form_label(form.description)}}
-{{ form_widget(form.description)}}
+{{ form_widget(form.description, {'attr': {'class': 'form-control'}})}}
 
 {{ form_label(form.qte)}}
-{{ form_widget(form.qte)}}
+{{ form_widget(form.qte, {'attr': {'class': 'form-control', 'min':1}})}}
+
+{{ form_label(form.prix)}}
+{{ form_widget(form.prix, {'attr': {'class': 'form-control', 'min':1}})}}
+
+{{ form_label(form.photo)}}
+{{ form_widget(form.photo)}}
 
 {{ form_widget(form.submit)}}
 
