@@ -103,4 +103,17 @@ class UsersController extends Controller
         ));
     }
 
+    /**
+     * @Route("/deconnexion", name="logout")
+     */
+    public function logoutAction()
+    {
+
+        $session = new Session();
+        $session->clear();
+
+
+        return $this->redirectToRoute('homepage');
+    }
+
 }

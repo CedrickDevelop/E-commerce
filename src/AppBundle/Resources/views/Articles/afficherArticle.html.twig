@@ -2,8 +2,9 @@
 
 {% block main %}
 
-
-<p>Bonjour {{app.session.get('user').nom}} {{app.session.get('user').prenom}} vous pouvez réaiser vos opérations </p>
+{% if app.session.get('user') %}
+<p>Bonjour {{app.session.get('user').nom}} {{app.session.get('user').prenom}} vous pouvez réaiser vos opérations {{app.session.get('user').role}}</p>
+{% endif %}
 
 <div class="d-grid gap-2 m-3">
   <button class="btn btn-primary" type="button"><a href="{{path('AddArticles')}}" class="text-light text-decoration-none m-3">Ajouter un nouvel élément à la table</a> </button>
@@ -27,15 +28,17 @@
       <td>{{article.qte}} </td>
       <td><a href="{{path('showArticle', {id:article.id} )}}" class="btn btn-success">Show</a> </td>
 
-      {% if app.session.get('user').role is same as(1) %}
+      {% if app.session.get('user') %}
+        {% if app.session.get('user').role == 1 %}
 
-      <td><a href="{{path('deleteArticle', {id:article.id} )}}" class="btn btn-danger" onclick="if(!confirm('voulez-vous supprimer ?')) return false">Delete</a> </td>
-      <td><a href="{{path('modifier', {id:article.id} )}}" class="btn btn-warning">Edit</a> </td>
+        <td><a href="{{path('deleteArticle', {id:article.id} )}}" class="btn btn-danger" onclick="if(!confirm('voulez-vous supprimer ?')) return false">Delete</a> </td>
+        <td><a href="{{path('modifier', {id:article.id} )}}" class="btn btn-warning">Edit</a> </td>
 
-      {% elseif app.session.get('user').role is same as(2) %}
-      <td><a href="#" class="btn btn-success">Commander</a> </td>
+        {% elseif app.session.get('user') and app.session.get('user').role is same as(2) %}
+        <td><a href="#" class="btn btn-success">Commander</a> </td>
 
-      {% endif %}
+        {% endif %}
+      {% endif %}  
     </tr>
 
   {% endfor %}

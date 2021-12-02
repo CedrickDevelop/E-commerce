@@ -115,6 +115,9 @@
                         <a class="collapse-item" href="{{path('afficher')}}">Afficher</a>
                         <a class="collapse-item" href="{{path('afficherArticleSelect')}}">AfficherArticleSelect</a>
                         <a class="collapse-item" href="{{path('search')}}">search</a>
+                        {% if app.session.get('user') %}
+                        <a class="collapse-item" href="{{ path('logout') }}">logout</a>
+                        {% endif %}
                        
                     </div>
                 </div>

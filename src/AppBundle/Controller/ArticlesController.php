@@ -8,15 +8,24 @@ use AppBundle\Form\ArticlesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ArticlesController extends Controller
 {
+
     /**
      * Le formulaire est généré avec Article Type
      * @Route("/Ajout", name="AddArticles")
      */
     public function AjoutAction(Request $request)
     {
+
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         //instance de l'entité
         $produit = new Articles();
         
@@ -47,7 +56,11 @@ class ArticlesController extends Controller
      */
     public function AjoutAction2(Request $request)
     {
-
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
 
         //instance de l'entité
         $produit = new Articles();
@@ -75,6 +88,13 @@ class ArticlesController extends Controller
      * @Route("/Afficher", name="afficher")
      */
     public function AfficherAction(){
+
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         // Connexion avec Doctrine
         $cnx=$this->getDoctrine()->getManager();
         $articles = $cnx->getRepository(Articles::class)->findAll();
@@ -89,6 +109,12 @@ class ArticlesController extends Controller
      */
     public function deleteAction($id){
         
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         $cnx=$this->getDoctrine()->getManager();
         $delete = $cnx->getRepository(Articles::class)->find($id);
         $cnx->remove($delete);
@@ -103,9 +129,14 @@ class ArticlesController extends Controller
      */
     public function showArticleAction($id){
         
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         $cnx=$this->getDoctrine()->getManager();
         $article = $cnx->getRepository(Articles::class)->find($id);
-
         
 
         return $this->render('@App/Articles/showArticle.html.twig', [
@@ -123,6 +154,12 @@ class ArticlesController extends Controller
      */
     public function AfficherArticleSelectAction(Request $request)
     {
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         $message ='';
         $oneArticle='';
         
@@ -166,6 +203,13 @@ class ArticlesController extends Controller
      */
     public function searchAction(Request $request)
     {
+
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
+
         $form = $this->createForm(ArticlesType::class);
         $form->handleRequest($request);
 
@@ -193,6 +237,12 @@ class ArticlesController extends Controller
      */
     public function modifierAction(Request $request, $id)
     {
+
+        $session = new Session();
+        $user = $session->get('user');
+        if (!$user){
+            return $this->redirectToRoute('connexion');
+        } 
         
         $cnx = $this->getDoctrine()->getManager();
         $produit = $cnx->getRepository(Articles::class)->find($id);
