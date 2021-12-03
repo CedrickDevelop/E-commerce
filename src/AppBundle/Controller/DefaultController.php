@@ -2,9 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Articles;
+use AppBundle\Entity\Carts;
+use AppBundle\Entity\Utilisateurs;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
@@ -15,12 +19,45 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $cnx = $this->getDoctrine()->getManager();
+
+        if($request->isMethod('POST'))
+        {
+            $cart = new Carts();
+            
+            // Recuperer la session du user connecté
+            $session = new Session();
+            $userID = $session->get('user')->getId();
+            $user = $cnx->getRepository(Utilisateurs::class)->find($userID);
+
+            // Recuperation du produit
+            $idProduit = $request->get('idProduit');
+            $produit = $cnx->getRepository(Articles::class)->find($idProduit);
+
+            // Definir le prix de l'ensmeble des produits
+            $prixProduit = $produit->getPrix();
+            $total = $prixProduit * $request->get('quantity');
+
+            // On edite les champs du panier
+            $cart->setIdArticle($produit);
+            $cart->setIdUser($user);
+            $cart->setTotal($total);
+            $cart->setDate(date('Y-m-d'));
+            $cart->setQteCommande($request->get('quantity'));
+            $cnx->persist($cart);
+            $cnx->flush();
+
+            return $this->redirectToRoute('homepage');
+        
+        }
+
+        $cnx = $this->getDoctrine()->getManager();
         $articles = $cnx->getRepository(Articles::class)->findAll();
 
         // replace this example code with whatever you need
         return $this->render('@App/index.html.twig', [
             'articles'  => $articles
         ]);
+
     }
     
     /**
