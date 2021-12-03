@@ -33,7 +33,7 @@ class ArticlesController extends Controller
         $form = $this->createForm(ArticlesType::class,$produit);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) // Deuxième possibilité pour récuperer les informations du formulaire
+        if($form->isSubmitted()) // formulaire généré
         {
             // PHOTO
                 //Obtenir les informations de nom etc...du formulaire type File

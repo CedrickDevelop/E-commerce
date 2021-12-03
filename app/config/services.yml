@@ -2,6 +2,9 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     articlesUpload: '%kernel.project_dir%/web/photosArticles'
+    photosUtilisateurs: '%kernel.project_dir%/web/photosUtilisateurs'
+    
+
 
 services:
     # default configuration for services in *this* file

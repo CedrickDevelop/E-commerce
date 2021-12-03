@@ -28,7 +28,20 @@ class UsersController extends Controller
         if($form->isSubmitted()){
 
             $formulaire = $request->get('appbundle_utilisateurs');
-            $email = $formulaire['email']; 
+            $email = $formulaire['email'];            
+            
+
+            if (isset($formulaire['photo'])){
+                $file = $formulaire['photo'];
+                $photoName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->guessExtension();
+                $photo = $photoName.'.'.$extension;
+
+                //ajout de la photo dans le dossier
+                $file->move($this->getParameter('photosUtilisateurs'), $photo);
+            }
+
+            
 
             $emailExist = $cnx->getRepository(Utilisateurs::class)->findBy(array('email'=>$email));
 
@@ -88,7 +101,7 @@ class UsersController extends Controller
                 $session->set('user', $userExist);
 
 
-                return $this->redirectToRoute('afficher');
+                return $this->redirectToRoute('account');
 
                 // return new Response('Vous êtes connecté '.$userExist->getNom().' '.$userExist->getPrenom());
             } else {
@@ -101,6 +114,53 @@ class UsersController extends Controller
         return $this->render('@App/Login/connexion.html.twig', array(
             'form'  =>$form->createView()
         ));
+    }
+    /**
+     * @Route("/account", name="account")
+     */
+    public function accountAction(Request $request)
+    {
+        //connexion bdd
+        $cnx = $this->getDoctrine()->getManager();
+        
+        // Recuperation user information session
+        $session = new Session();
+                
+        // Recuperatiion user
+        $userId = $session->get('user')->getId();
+        $user = $cnx->getRepository(Utilisateurs::class)->find($userId);
+        
+
+        // Creation du formulaire pour la page
+        $form = $this->createForm(UtilisateursType::class);
+        $form->handleRequest($request);
+
+        
+        if ($form->isSubmitted()){
+            // infos de la photo
+            $file =$form->get('photo')->getData();
+            $photoName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->guessExtension();
+            $photo = $photoName.'.'.$extension;
+
+            //ajout de la photo dans le dossier
+            $file->move($this->getParameter('photosUtilisateurs'), $photo);
+
+            // On met a jour les données en bdd
+            $user->setPhoto($photo);
+            $cnx->persist($user);
+            $cnx->flush();
+
+
+            return $this->redirectToRoute('account');
+        }
+
+        
+        
+        return $this->render('@App/Login/account.html.twig', [
+            'form'  => $form->createView(),
+            'user'  => $user
+        ]);
     }
 
     /**
