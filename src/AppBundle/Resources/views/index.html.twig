@@ -460,7 +460,7 @@
 								<h5 class="modal-title" id="exampleModalLabel">New message</h5>
 							</div>
 							<div class="modal-body">
-								<form method="post">
+								{# <form method="post">
 									
 									<label for="quantity">Combien de produits souhaitez-vous commander ?</label>
 									<input type="number" name="quantity" id="quantity" min="1" class="form-control"> 
@@ -469,7 +469,20 @@
 
 									<button type="submit" class="btn btn-primary">J'ajoute au panier</button>
 									<button type="submit" class="btn btn-danger">J'annule ces produits</button>
-								</form>
+								</form> #}
+								{{form_start(formCart)}}
+
+								{{form_label(formCart.qteCommande)}}
+								{{form_widget(formCart.qteCommande)}}
+
+								<input type="hidden" value="{{article.id}}" name="idProduit">
+
+								<button type="submit" class="btn btn-primary">J'ajoute au panier</button>
+								<button type="submit" class="btn btn-danger">J'annule ces produits</button>
+
+								{{form_end(formCart, {'render_rest':false})}}
+
+
 							</div>
 						</div>
 					</div>

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Articles;
 use AppBundle\Entity\Carts;
 use AppBundle\Entity\Utilisateurs;
+use AppBundle\Form\CartsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,17 +19,30 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+        // Creation du formulaire de panier
+        $cart = new Carts();
+        $formCarts = $this->createForm(CartsType::class);
+
+        // Connexion et creation de session
         $cnx = $this->getDoctrine()->getManager();
         $session = new Session();
+
+        $formCarts->handleRequest($request);
 
 
         if($request->isMethod('POST'))
         {
-            $cart = new Carts();
-            
+            // V1 -- on recupere les informations du User en base de données car les tables ne sont pas jointes********************************
+
             // Recuperer la session du user connecté
-            $userID = $session->get('user')->getId();
-            $user = $cnx->getRepository(Utilisateurs::class)->find($userID);
+            // $userID = $session->get('user')->getId();
+            // $user = $cnx->getRepository(Utilisateurs::class)->find($userID);
+
+            // V2 -- on recupere directement les informations de l'utilisateur grâce aux tables jointes ********************************
+            // v2 Recuperer les inofrmations du User grâce aux tables jointes
+            $userEmail = $session->get('user')->getEmail();
+            $user = $cnx->getRepository(Utilisateurs::class)->findOneByEmail($userEmail);
 
             // Recuperation du produit
             $idProduit = $request->get('idProduit');
@@ -71,8 +85,9 @@ class DefaultController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('@App/index.html.twig', [
-            'articles'  => $articles,
-            'cart'      => $cartUser
+            'articles'  => @$articles,
+            'cart'      => @$cartUser,
+            'formCart'  => $formCarts->createView()
         ]);
 
     }
