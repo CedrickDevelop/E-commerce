@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Articles;
+use AppBundle\Entity\Carts;
 use AppBundle\Entity\Utilisateurs;
 use AppBundle\Form\UtilisateursType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,6 +74,9 @@ class UsersController extends Controller
      */
     public function connexionAction(Request $request)
     {
+
+        
+
         $user = new Utilisateurs();
 
 
@@ -88,6 +93,8 @@ class UsersController extends Controller
 
             $userExist = $cnx->getRepository(Utilisateurs::class)->findOneBy(array('email'=>$email));
 
+
+
             if (empty($userExist)){
                 $this->get('session')->getFlashBag()->add('error', "Il n'y a pas de compte associé à cet email");
                 goto view;
@@ -100,7 +107,9 @@ class UsersController extends Controller
 
                 $session->set('user', $userExist);
 
-
+                if ($userExist->getRole() == 2){
+                    return $this->redirectToRoute('homepage');
+                }
                 return $this->redirectToRoute('account');
 
                 // return new Response('Vous êtes connecté '.$userExist->getNom().' '.$userExist->getPrenom());
@@ -120,15 +129,24 @@ class UsersController extends Controller
      */
     public function accountAction(Request $request)
     {
-        //connexion bdd
-        $cnx = $this->getDoctrine()->getManager();
-        
         // Recuperation user information session
         $session = new Session();
+        if($session->get('user') == null){
+            $this->redirectToRoute('connexion');
+        }
+        //connexion bdd
+        $cnx = $this->getDoctrine()->getManager();       
+        
                 
         // Recuperatiion user
         $userId = $session->get('user')->getId();
         $user = $cnx->getRepository(Utilisateurs::class)->find($userId);
+
+        // Recuperation des informations d'achat
+        $cart = $cnx->getRepository(Carts::class)->findBy(array('idUser'=> $userId));
+        
+
+        // $Produits = $cnx->getRepository(Articles::class)->findBy(array('id'=> $cart->idArticle->id ));
         
 
         // Creation du formulaire pour la page
@@ -159,7 +177,8 @@ class UsersController extends Controller
         
         return $this->render('@App/Login/account.html.twig', [
             'form'  => $form->createView(),
-            'user'  => $user
+            'user'  => $user,
+            'cart'  => $cart
         ]);
     }
 

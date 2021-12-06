@@ -35,15 +35,35 @@
     <img src="{{ asset('photosUtilisateurs/'~ user.photo ) }}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{user.nom}} {{user.prenom}}</h5>
-      <ol class="card-text">
+      <ul class="card-text">
         <li>Id: {{user.id}}</li>
         <li>Email : {{user.email}}</li>
         <li>Role : {{user.role}}</li>
-      </ol>
+      </ul>
       <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addPicture">Ajouter une photo</button>
     </div>
   </div>
   
+
+
+  <!-- { for panier in cart %}
+    
+  <div class="card m-5" style="width: 18rem;">
+
+    <div class="card-body">
+      <h5 class="card-title">{panier.date}} </h5>
+      <ul class="card-text">
+        <li>Nombre de produits: {panier.qteCommande}}</li>
+        <!-- <li>Nom du produit: {user.qteCommande}}</li> -->
+<!-- 
+      </ul>
+
+    </div>
+  </div>
+  
+  { endfor %} --> -->
+
+
 
 </section>
 

@@ -19,13 +19,14 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $cnx = $this->getDoctrine()->getManager();
+        $session = new Session();
+
 
         if($request->isMethod('POST'))
         {
             $cart = new Carts();
             
             // Recuperer la session du user connecté
-            $session = new Session();
             $userID = $session->get('user')->getId();
             $user = $cnx->getRepository(Utilisateurs::class)->find($userID);
 
@@ -50,12 +51,28 @@ class DefaultController extends Controller
         
         }
 
-        $cnx = $this->getDoctrine()->getManager();
+        if(!empty($session->get('user'))){
+
+            $cartUser = $cnx->getRepository(Carts::class)->findBy(['idUser'=> $session->get('user')->getId()]);
+
+            
+        }
+
+        
+
         $articles = $cnx->getRepository(Articles::class)->findAll();
+
+        // Calcul du prix total 
+        // $total = 0;
+        // foreach($cartUser as $key){
+        //     $t = $key->getIdArticle->getPrix()* $key->getqtCommande();
+        //     $total = $total + $t;
+        // }
 
         // replace this example code with whatever you need
         return $this->render('@App/index.html.twig', [
-            'articles'  => $articles
+            'articles'  => $articles,
+            'cart'      => $cartUser
         ]);
 
     }
@@ -86,6 +103,20 @@ class DefaultController extends Controller
         return $this->render('default/login.html.twig',[
             'msg'   => @$message
         ]);
+    }
+    /**
+     * @Route("/delete_cart/{id}", name="delete_cart")
+     */
+    public function deleteCartAction($id)
+    {
+        $cnx = $this->getDoctrine()->getManager();
+
+        $delete = $cnx->getRepository(Carts::class)->find($id);
+        $cnx->remove($delete);
+        $cnx->flush();   
+
+        // replace this example code with whatever you need
+        return $this->redirectToRoute('homepage');
     }
 
     /**
